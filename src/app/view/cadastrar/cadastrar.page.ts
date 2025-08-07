@@ -35,7 +35,7 @@ export class CadastrarPage implements OnInit {
   }
 
   cadastrar(): void {
-      if (!this.validar(this.nome) || !this.validar(this.telefone)){
+      if (!this.validar(this.nome) || !this.validar(this.telefone) || !this.validar(this.genero)){
         console.log("Nome obrigatório")
         this.presentAlert("Erro ao Cadastrar","Campo Obrigatório")
         return;
@@ -44,7 +44,7 @@ export class CadastrarPage implements OnInit {
       contato.nome = this.nome;
       contato.telefone = this.telefone;
       contato.genero = this.genero;
-
+      
       if (this.dataNascimento) {
         const data = new Date(this.dataNascimento);
         contato.dataNascimento = data.toLocaleDateString('pt-BR');
