@@ -1,77 +1,63 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { AlertController, IonButton } from '@ionic/angular/standalone';
+import { IonicModule} from '@ionic/angular'
 import { FormsModule } from '@angular/forms';
+import { AlertController, IonButton } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { ContatoService } from 'src/app/service/contato.service';
 import { Contato } from 'src/app/model/contato';
 
+ 
 @Component({
   selector: 'app-cadastrar',
   templateUrl: './cadastrar.page.html',
   styleUrls: ['./cadastrar.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule,CommonModule, FormsModule]
 })
 export class CadastrarPage implements OnInit {
-  nome!:string;
-  telefone!:string;
+  nome!: string;
+  telefone!: string ;
   dataNascimento!: string;
-  genero!: string;
   maxDate: string;
+  genero!: string;
 
-  constructor(private alertController: AlertController, 
-    private router:Router,
-    private contatoService: ContatoService) { 
-      let hoje = new Date();
-      this.maxDate = hoje.toISOString().split('T')[0]; 
-      
+  constructor(private alertController: AlertController, private router:Router, private contatoService: ContatoService) {7
+    let hoje = new Date();
+    this.maxDate = hoje.toISOString().split('T')[0]
+   }
+
+  ngOnInit() {  
+  }
+  cadastrar(){
+    if(!this.validar(this.nome) || !this.validar(this.telefone)){
+      this.presentAlert("Erro ao cadastar", "Erro ao cadastrar")
+      return
     }
-
-  ngOnInit() {
-    const today = new Date();
-    this.maxDate = today.toISOString().split('T')[0]; // Formato "YYYY-MM-DD"
+    this.presentAlert("Sucesso", "Contato Cadastrado")
+    let contato: Contato = new Contato(this.nome, this.telefone, this.dataNascimento, this.genero);
+    this.contatoService.create(contato)
+    this.router.navigate(["/home"])
   }
-
-  cadastrar(): void {
-      if (!this.validar(this.nome) || !this.validar(this.telefone) || !this.validar(this.genero)){
-        console.log("Nome obrigatório")
-        this.presentAlert("Erro ao Cadastrar","Campo Obrigatório")
-        return;
-      }
-      let contato: Contato = new Contato();
-      contato.nome = this.nome;
-      contato.telefone = this.telefone;
-      contato.genero = this.genero;
-      
-      if (this.dataNascimento) {
-        const data = new Date(this.dataNascimento);
-        contato.dataNascimento = data.toLocaleDateString('pt-BR');
-      } else{
-        contato.dataNascimento = '';
-      }      
-      this.contatoService.create(contato);
-      this.presentAlert("Sucesso","Contato Cadastrado");
-      this.router.navigate(["/home"]);
-  }
-
-  private validar(campo: any) : boolean{
+  private validar(campo:any) : boolean{
     if(!campo){
       return false;
     }
-      return true
-    }
-    
-    async presentAlert(subHeader:string, message:string) {
+    return true;
+  }
+  async presentAlert(subHeader: string, message: string) {
     const alert = await this.alertController.create({
-      header: 'Agenda de Contatos',
+      header: 'Agenda de contatos',
       subHeader: subHeader,
       message: message,
-      buttons: ['Ok'],
+      buttons: ['OK'],
     });
     await alert.present();
   }
-
 }
+
+
+
+
+
 

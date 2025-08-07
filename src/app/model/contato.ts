@@ -1,8 +1,15 @@
 export class Contato {
-    private _nome: string = '';
-    private _telefone: string = '';
-    private _dataNascimento: string = '';
-    private _genero: string = 'Não declarar';
+    private _nome: string;
+    private _telefone: string;
+    private _dataNascimento?: string;
+    private _genero?: string;
+
+    constructor(nome: string, telefone: string, dataNascimento?: string, genero?: string) {
+        this._nome = nome;
+        this._telefone = telefone;
+        this._dataNascimento = dataNascimento;
+        this._genero = genero;
+    }
 
     public get nome(): string {
         return this._nome;
@@ -18,17 +25,19 @@ export class Contato {
         this._telefone = value;
     }
 
-    public get dataNascimento(): string {
+   public get dataNascimento(): string | undefined {
         return this._dataNascimento;
     }
-    public set dataNascimento(value: string) {
+
+    public set dataNascimento(value: string | undefined) {
         this._dataNascimento = value;
     }
 
-    public get genero(): string {
+    public get genero(): string | undefined {
         return this._genero;
     }
-    public set genero(value: string) {
+
+    public set genero(value: string | undefined) {
         this._genero = value;
     }
 }
