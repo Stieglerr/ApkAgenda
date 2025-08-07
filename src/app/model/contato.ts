@@ -1,12 +1,8 @@
 export class Contato {
-    private _nome: string;
-    private _telefone: string;
-
-
-    constructor(nome: string, telefone: string){
-        this._nome = nome;
-        this._telefone = telefone;
-    }
+    private _nome: string = '';
+    private _telefone: string = '';
+    private _dataNascimento: string = '';
+    private _genero: string = 'Não declarar';
 
     public get nome(): string {
         return this._nome;
@@ -20,5 +16,19 @@ export class Contato {
     }
     public set telefone(value: string) {
         this._telefone = value;
+    }
+
+    public get dataNascimento(): string {
+        return this._dataNascimento;
+    }
+    public set dataNascimento(value: string) {
+        this._dataNascimento = value;
+    }
+
+    public get genero(): string {
+        return this._genero;
+    }
+    public set genero(value: string) {
+        this._genero = value;
     }
 }

@@ -26,21 +26,34 @@ export class CadastrarPage implements OnInit {
     private contatoService: ContatoService) { 
       let hoje = new Date();
       this.maxDate = hoje.toISOString().split('T')[0]; 
+      
     }
 
   ngOnInit() {
+    const today = new Date();
+    this.maxDate = today.toISOString().split('T')[0]; // Formato "YYYY-MM-DD"
   }
 
-  cadastrar(){
-    if(!this.validar(this.nome) || !this.validar(this.telefone)){
-      console.log("Nome obrigatório")
-      this.presentAlert("Erro ao Cadastrar","Campo Obrigatório")
-      return;
-    }
-    let contato: Contato = new Contato(this.nome, this.telefone);
-    this.contatoService.create(contato)
-    this.presentAlert("Sucesso","Contato Cadastrado")
-    this.router.navigate(["/home"])
+  cadastrar(): void {
+      if (!this.validar(this.nome) || !this.validar(this.telefone)){
+        console.log("Nome obrigatório")
+        this.presentAlert("Erro ao Cadastrar","Campo Obrigatório")
+        return;
+      }
+      let contato: Contato = new Contato();
+      contato.nome = this.nome;
+      contato.telefone = this.telefone;
+      contato.genero = this.genero;
+
+      if (this.dataNascimento) {
+        const data = new Date(this.dataNascimento);
+        contato.dataNascimento = data.toLocaleDateString('pt-BR');
+      } else{
+        contato.dataNascimento = '';
+      }      
+      this.contatoService.create(contato);
+      this.presentAlert("Sucesso","Contato Cadastrado");
+      this.router.navigate(["/home"]);
   }
 
   private validar(campo: any) : boolean{
