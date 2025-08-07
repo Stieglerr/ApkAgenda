@@ -11,9 +11,9 @@
   <ion-item *ngFor="let contato of contatos">
     <ion-label>
       <h2>{{ contato.nome }}</h2>
-      <p>{{ contato.telefone }}</p>
-      <p>Nascimento: {{ contato.dataNascimento || 'Não informado' }}</p>
-      <p>Gênero: {{ contato.genero }}</p>
+      <h2>{{ contato.telefone }}</h2>
+      <h2>Nascimento: {{ contato.dataNascimento || 'Não informado' }}</h2>
+      <h2>Gênero: {{ contato.genero }}</h2>
     </ion-label>
   </ion-item>
 </ion-list>
